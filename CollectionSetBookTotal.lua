@@ -8,26 +8,26 @@ local UnlockedPiecesTable = {}
 -- Used only for debugging
 -- local tempAllItems, tempFoundItems
 
-local tlw, texture, label
-tlw = WINDOW_MANAGER:CreateTopLevelWindow()
-tlw:SetDimensions(200,200)
-tlw:SetAnchor(CENTER, ZO_CollectionsBook_TopLevel, CENTER, 0, 0)
-tlw:SetHidden(true)
-texture = WINDOW_MANAGER:CreateControl(nil, tlw, CT_STATUSBAR)
-texture:SetAnchor(CENTER,tlw,TOPLEFT,0,-265)
-ApplyTemplateToControl(texture,"ZO_ArrowProgressBarWithBG")
-label = texture:GetNamedChild("Progress")
-ZO_StatusBar_SetGradientColor(texture, ZO_XP_BAR_GRADIENT_COLORS)
+local csbtTlw, csbtTexture, csbtLabel
+csbtTlw = WINDOW_MANAGER:CreateTopLevelWindow()
+csbtTlw:SetDimensions(200,200)
+csbtTlw:SetAnchor(CENTER, ZO_CollectionsBook_TopLevel, CENTER, 0, 0)
+csbtTlw:SetHidden(true)
+csbtTexture = WINDOW_MANAGER:CreateControl(nil, csbtTlw, CT_STATUSBAR)
+csbtTexture:SetAnchor(CENTER,csbtTlw,TOPLEFT,0,-265)
+ApplyTemplateToControl(csbtTexture,"ZO_ArrowProgressBarWithBG")
+csbtLabel = csbtTexture:GetNamedChild("Progress")
+ZO_StatusBar_SetGradientColor(csbtTexture, ZO_XP_BAR_GRADIENT_COLORS)
 
 
 
-texture:SetHandler("OnValueChanged", function(value)
+csbtTexture:SetHandler("OnValueChanged", function(value)
 	-- These do nothing for the time being, they just seem to be required by SetValue and SetMinMax 
 end)
 
 
 
-texture:SetHandler("OnMinMaxValueChanged", function (_, newMin, newMax)
+csbtTexture:SetHandler("OnMinMaxValueChanged", function (_, newMin, newMax)
 	-- These do nothing for the time being, they just seem to be required by SetValue and SetMinMax
 end)
 
@@ -53,9 +53,9 @@ end
 local function RefreshFoundItems (setItemId, slotsJustUnlockedMask)
 	local foundItems, allItems = GetCollectionStatus()
 
-	texture:SetMinMax(0, allItems)
-	texture:SetValue(foundItems)
-	label:SetText(zo_strformat(SI_ITEM_SETS_BOOK_CATEGORY_PROGRESS, foundItems, allItems) .. "  (" .. tostring(math.floor((foundItems / allItems)*100)) .. "%)")
+	csbtTexture:SetMinMax(0, allItems)
+	csbtTexture:SetValue(foundItems)
+	csbtLabel:SetText(zo_strformat(SI_ITEM_SETS_BOOK_CATEGORY_PROGRESS, foundItems, allItems) .. "  (" .. tostring(math.floor((foundItems / allItems)*100)) .. "%)")
 	
 	EVENT_MANAGER:UnregisterForEvent(ADDON_NAME, EVENT_PLAYER_ACTIVATED)
 end
@@ -66,7 +66,7 @@ EVENT_MANAGER:RegisterForEvent(ADDON_NAME, EVENT_ITEM_SET_COLLECTION_UPDATED,	Re
 
 local function InitializeSetBookProgress()
 	
-	local fragment = ZO_HUDFadeSceneFragment:New(tlw, 0, 0)
+	local fragment = ZO_HUDFadeSceneFragment:New(csbtTlw, 0, 0)
 	
 	--add my fragment to scenes:
 	SCENE_MANAGER:GetScene("itemSetsBook"):AddFragment(fragment)
@@ -83,13 +83,13 @@ local function OnAddOnLoaded(_, addOnName)
 		-- 																	d("Found " .. tostring(tempFoundItems) .. " of " .. tostring(tempAllItems))
 		-- 																end
 		-- SLASH_COMMANDS["/debugcollectionsetmax"] = function (newMaximum)
-		-- 																		texture:SetMinMax(0, newMaximum)
-		-- 																		label:SetText(zo_strformat(SI_ITEM_SETS_BOOK_CATEGORY_PROGRESS, tempFoundItems, newMaximum) .. "  (" .. tostring(math.floor((tempFoundItems / newMaximum)*100)) .. "%)")
+		-- 																		csbtTexture:SetMinMax(0, newMaximum)
+		-- 																		csbtLabel:SetText(zo_strformat(SI_ITEM_SETS_BOOK_CATEGORY_PROGRESS, tempFoundItems, newMaximum) .. "  (" .. tostring(math.floor((tempFoundItems / newMaximum)*100)) .. "%)")
 		-- 																		d("Max changed to " .. tostring(newMaximum))
 		-- 																end
 		-- SLASH_COMMANDS["/debugcollectionsetbarvalue"] = function (newValue)
 		-- 																		d("Bar value set")
-		-- 																		texture:SetValue(newValue)
+		-- 																		csbtTexture:SetValue(newValue)
 		-- 																end
 		
 		InitializeSetBookProgress()

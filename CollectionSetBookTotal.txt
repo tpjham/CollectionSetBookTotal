@@ -2,7 +2,7 @@
 ## Author: Tombaa
 ## Version: 0.3
 ## AddOnVersion: 0.3
-## APIVersion: 100032 100033
+## APIVersion: 100035 100034
 ## Description: Small addon to add a total progress bar on item set sticker book
 
 ; This Add-on is not created by, affiliated with or sponsored by ZeniMax
