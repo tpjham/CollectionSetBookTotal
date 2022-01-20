@@ -1,7 +1,7 @@
-CollectionSetBookTotal = {}
+ItemSetsSummaryPagePercentages = {}
 
-local ADDON_NAME = "CollectionSetBookTotal"
-local ADDON_DISPLAY_NAME = "Item set total progress"
+local ADDON_NAME = "ItemSetsSummaryPagePercentages"
+local ADDON_DISPLAY_NAME = "Item Sets Summary Page Percentages"
 
 
 local function OnAddOnLoaded(_, addOnName)
